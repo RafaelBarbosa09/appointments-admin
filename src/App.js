@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Button, GlobalStyles, Modal, Typography } from "@mui/material";
 import { Close } from "@mui/icons-material";
+import { getAllAppointments } from "./services/appointments";
 
 function App() {
   const [open, setOpen] = useState(false);
+  const [appointments, setAppointments] = useState([]);
 
   const handleOpen = () => {
     setOpen(true);
@@ -27,6 +29,15 @@ function App() {
     p: '3rem',
     borderRadius: '0.25rem',
   };
+
+  useEffect(() => {
+    const fetchAppointments = async () => {
+      const appointments = await getAllAppointments();
+      setAppointments(appointments);
+    }
+
+    fetchAppointments();
+  }, []);
 
   return (
     <>
@@ -67,6 +78,12 @@ function App() {
           </Typography>
         </Box>
       </Modal>
+      {appointments.map(appointment => (
+        <div key={appointment.id}>
+          <h2>{appointment.id}</h2>
+          <p>{appointment.appointmentDateTime}</p>
+        </div>
+      ))}
       <GlobalStyles />
     </>
   );
