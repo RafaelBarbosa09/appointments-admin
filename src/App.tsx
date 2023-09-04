@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { GlobalStyles } from "./styles/global";
-import Home from "./pages/Home";
-import Appointments from "./pages/Appointments";
+import Home from "./components/pages/Home";
+import Appointments from "./components/pages/Appointments";
 
 const App = () => {
   return (
