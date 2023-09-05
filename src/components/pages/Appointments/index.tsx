@@ -1,5 +1,5 @@
 import { Container } from "@mui/material";
-import MenuToggle from "../shared/MenuToggle";
+import MenuToggle from "../../shared/MenuToggle";
 
 export const Appointments = () => {
   return (
