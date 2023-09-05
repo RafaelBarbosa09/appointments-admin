@@ -1,10 +1,13 @@
-import { Link } from "react-router-dom";
+import { Container } from "@mui/material";
+import MenuToggle from "../shared/MenuToggle";
 
 export const Appointments = () => {
   return (
     <>
-      <h1>Appointments</h1>
-      <Link to="/">Home</Link>
+      <MenuToggle />
+      <Container>
+        <h1>Appointments</h1>
+      </Container>
     </>
   );
 }

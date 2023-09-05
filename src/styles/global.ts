@@ -8,6 +8,7 @@ export const GlobalStyles = createGlobalStyle`
     --text-input: #fefefe;
     --text: #0d0c22;
     --shape: #ffffff;
+    --background: #f0f2f5;
     --red: #e52e4d;
     --green: #33cc95;
   }
@@ -30,7 +31,7 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   body {
-    background: #F4F3EF;
+    background: var(--background);
     -webkit-font-smoothing: antialiased;
   }
 
@@ -41,6 +42,11 @@ export const GlobalStyles = createGlobalStyle`
 
   h1, h2, h3, h4, h5, h6, strong {
     font-weight: 600;
+  }
+
+  a {
+    text-decoration: none;
+    color: var(--white);
   }
 
   button, input[type="checkbox"] {
