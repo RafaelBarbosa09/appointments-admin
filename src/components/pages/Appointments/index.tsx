@@ -1,10 +1,10 @@
 import { Container } from "@mui/material";
-import MenuToggle from "../../shared/MenuToggle";
+import HeaderMenu from "../../shared/HeaderMenu";
 
 export const Appointments = () => {
   return (
     <>
-      <MenuToggle />
+      <HeaderMenu title="Agendamentos" />
       <Container>
         <h1>Appointments</h1>
       </Container>

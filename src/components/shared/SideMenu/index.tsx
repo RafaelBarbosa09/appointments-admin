@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 import { Close } from '@mui/icons-material';
 import { CloseBtn, Drawer, List, ListItem } from './styles';
 
-interface CustomDrawerProps {
+interface SideMenuProps {
   open: boolean;
   onClose: () => void;
 }
 
-function CustomDrawer({ open, onClose }: CustomDrawerProps) {
+const SideMenu = ({ open, onClose }: SideMenuProps) => {
   return (
     <Drawer anchor="left" open={open} onClose={onClose}>
       <CloseBtn onClick={onClose}>
@@ -26,4 +26,4 @@ function CustomDrawer({ open, onClose }: CustomDrawerProps) {
   );
 }
 
-export default CustomDrawer;
+export default SideMenu;
