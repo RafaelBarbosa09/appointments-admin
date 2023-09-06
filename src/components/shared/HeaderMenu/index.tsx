@@ -30,6 +30,9 @@ const HeaderMenu = ({ title }: HeaderMenuProps) => {
           <Typography variant="h6" noWrap>
             {title}
           </Typography>
+          <Typography noWrap sx={{ marginLeft: 'auto' }}>
+            Olá, Fulano
+          </Typography>
         </Toolbar>
       </Appbar>
       <SideMenu open={sidebarOpen} onClose={closeSidebar} />
