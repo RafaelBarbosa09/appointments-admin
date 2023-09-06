@@ -13,7 +13,7 @@ export const Drawer = styled(MaterialDrawer)`
 `;
 
 export const List = styled(MaterialList)`
-  padding: 1rem 0.5rem;
+  padding: 1rem 0.8rem;
 `;
 
 export const ListItem = styled(MaterialListItem)`
