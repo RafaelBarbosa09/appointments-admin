@@ -1,7 +1,8 @@
 
 import { Link } from 'react-router-dom';
-import { Close } from '@mui/icons-material';
+import { Close, Logout } from '@mui/icons-material';
 import { CloseBtn, Drawer, List, ListItem } from './styles';
+import { ListItemIcon, ListItemText } from '@mui/material';
 
 interface SideMenuProps {
   open: boolean;
@@ -20,6 +21,14 @@ const SideMenu = ({ open, onClose }: SideMenuProps) => {
         </ListItem>
         <ListItem>
           <Link to="/appointments">Agendamentos</Link>
+        </ListItem>
+      </List>
+      <List style={{ position: 'absolute', bottom: 0, width: '100%' }}>
+        <ListItem onClick={() => alert("Logout")}>
+          <ListItemIcon>
+            <Logout style={{ color: 'white' }} />
+          </ListItemIcon>
+          <ListItemText primary="Logout" />
         </ListItem>
       </List>
     </Drawer>
