@@ -10,8 +10,10 @@ export const Appointments = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const resonse = await getAllAppointments();
-      setAppointments(resonse);
+      const response = await getAllAppointments();
+      if (response) {
+        setAppointments(response);
+      }
     };
 
     fetchData();

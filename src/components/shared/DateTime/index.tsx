@@ -1,15 +1,16 @@
 import { Typography } from "@mui/material";
-import { formatDateTime } from "../../../utils/format/formatDateTime";
+import { formatDateTime } from "../../../utils/format/date";
 
 interface DateTimeProps {
   children: Date;
+  style?: object;
 }
 
-const DateTime = ({ children }: DateTimeProps) => {
+const DateTime = ({ style, children }: DateTimeProps) => {
   const formattedDate = formatDateTime(children);
 
   return (
-    <Typography>{formattedDate}</Typography>
+    <Typography style={style}>{formattedDate}</Typography>
   );
 };
 

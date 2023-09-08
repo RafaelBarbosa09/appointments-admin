@@ -8,7 +8,7 @@ export const GlobalStyles = createGlobalStyle`
     --text-input: #fefefe;
     --text: #0d0c22;
     --shape: #ffffff;
-    --background: #f0f2f5;
+    --background: #f4f3ef;
     --red: #e52e4d;
     --green: #33cc95;
   }
@@ -36,7 +36,7 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   body, input, textArea, button {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-weight: 400;
   }
 

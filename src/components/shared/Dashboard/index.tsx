@@ -9,7 +9,7 @@ interface DashboardProps {
 const Dashboard = ({ appointments }: DashboardProps) => {
   return (
     <Grid container spacing={2}>
-      {appointments.map((appointment) => (
+      {appointments?.map((appointment) => (
         <Grid item xs={12} md={6} key={appointment.id}>
           <DashboardItem appointment={appointment} />
         </Grid>

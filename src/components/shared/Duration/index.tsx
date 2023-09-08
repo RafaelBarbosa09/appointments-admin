@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import { formatDuration } from "../../../utils/format/formatDuration";
+import { formatDuration } from "../../../utils/format/duration";
 
 interface DurationProps {
   children: string;
@@ -8,7 +8,7 @@ interface DurationProps {
 const Duration = ({ children }: DurationProps) => {
   const formattedDuration = formatDuration(children);
 
-  return <Typography>{formattedDuration}</Typography>;
+  return <Typography component="span">{formattedDuration}</Typography>;
 };
 
 export default Duration;

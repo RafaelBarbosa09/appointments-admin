@@ -2,17 +2,26 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { GlobalStyles } from "./styles/global";
 import Home from "./components/pages/Home";
 import Appointments from "./components/pages/Appointments";
+import { ThemeProvider, createTheme } from "@mui/material";
 
 const App = () => {
+  const theme = createTheme({
+    typography: {
+      fontFamily: 'Montserrat, sans-serif',
+    },
+  });
+
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/appointments" element={<Appointments />} />
-        </Routes>
-      </BrowserRouter>
-      <GlobalStyles />
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/appointments" element={<Appointments />} />
+          </Routes>
+        </BrowserRouter>
+        <GlobalStyles />
+      </ThemeProvider>
     </>
   );
 }

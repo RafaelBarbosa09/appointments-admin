@@ -7,14 +7,16 @@ interface ModalProps {
   children: ReactNode;
   open: boolean;
   setOpen: (open: boolean) => void;
+  style?: object;
 }
 
 const Modal = ({ children, ...props }: ModalProps) => {
-  const { open, setOpen } = props;
+  const { open, setOpen, style } = props;
   const handleClose = () => setOpen(false);
 
   return (
     <MaterialModal
+      style={style}
       open={open}
       onClose={handleClose}>
       <Box>
