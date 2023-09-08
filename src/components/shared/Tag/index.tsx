@@ -1,11 +1,18 @@
 import { Typography } from "@mui/material";
+import { StyledTag } from "./styles";
+import { AppointmentStatus } from "../../../utils/types/AppointmentStatus";
 
-export const Tag = () => {
+export interface TagProps {
+  status: AppointmentStatus;
+}
+
+export const Tag = ({ status }: TagProps) => {
+  console.log(status);
   return (
-    <div>
-      <Typography component="span">
-        teste
+    <StyledTag status={status}>
+      <Typography component="span" fontWeight={500}>
+        {status.name}
       </Typography>
-    </div>
+    </StyledTag>
   );
 };

@@ -7,6 +7,8 @@ import Modal from "../../Modal";
 import { useState } from "react";
 import { Button, Card, CardHeader, Title } from "./styles";
 import Currency from "../../Corrency";
+import { Tag } from "../../Tag";
+import { Status } from "../../../../utils/types/Status";
 
 interface DashboardItemProps {
   appointment: Appointment;
@@ -14,6 +16,17 @@ interface DashboardItemProps {
 
 const DashboardItem = ({ appointment }: DashboardItemProps) => {
   const [open, setOpen] = useState(false);
+  if (appointment.id === 1) {
+    appointment.status.name = Status.PENDING;
+  }
+
+  if (appointment.id === 2) {
+    appointment.status.name = Status.FINISHED;
+  }
+
+  if (appointment.id === 3) {
+    appointment.status.name = Status.CANCELLED;
+  }
 
   return (
     <>
@@ -27,7 +40,7 @@ const DashboardItem = ({ appointment }: DashboardItemProps) => {
           </Tooltip>
         </CardHeader>
         <DateTime style={{ color: '#a49e93', fontSize: '.9rem', fontWeight: '300' }}>{appointment.appointmentDateTime}</DateTime>
-
+        <Tag status={appointment.status} />
       </Card>
       <Modal open={open} setOpen={setOpen}>
         <Title>Agendamento</Title>
