@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { GlobalStyles } from "./styles/global";
-import Home from "./components/pages/Home";
-import Appointments from "./components/pages/Appointments";
+import Home from "./components/pages/HomePage";
+import Appointments from "./components/pages/AppointmentsPage";
 import { ThemeProvider, createTheme } from "@mui/material";
 
 const App = () => {

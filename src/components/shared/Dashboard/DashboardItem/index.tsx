@@ -2,7 +2,7 @@ import { IconButton, Tooltip, Typography } from "@mui/material";
 import Duration from "../../Duration";
 import { Appointment } from "../../../../utils/types/Appointment";
 import DateTime from "../../DateTime";
-import { InfoOutlined, Tag } from "@mui/icons-material";
+import { InfoOutlined } from "@mui/icons-material";
 import Modal from "../../Modal";
 import { useState } from "react";
 import { Button, Card, CardHeader, Title } from "./styles";
