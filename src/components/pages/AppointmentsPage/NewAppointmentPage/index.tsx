@@ -7,6 +7,7 @@ import { Work } from "../../../../utils/types/Work";
 import { getAllWorks } from "../../../../services/works";
 import { getAllProfessionals } from "../../../../services/professionals";
 import { Card } from "./styles";
+import { createAppointment } from "../../../../services/appointments";
 
 const NewAppointmentPage = () => {
   const [professionals, setProfessionals] = useState<Professional[]>([]);
@@ -48,13 +49,22 @@ const NewAppointmentPage = () => {
     setSelectedDate(newDate);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!validateForm()) {
       return;
     }
 
+    await createAppointment({
+      appointmentDateTime: selectedDate!,
+      professional: {
+        id: selectedProfessional!,
+      },
+      work: {
+        id: selectedWork!,
+      },
+    });
     console.log(selectedProfessional);
     console.log(selectedWork);
     console.log(selectedDate);

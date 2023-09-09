@@ -15,17 +15,21 @@ interface DashboardItemProps {
 }
 
 const DashboardItem = ({ appointment }: DashboardItemProps) => {
+  const status = appointment.status!;
+  const work = appointment.work!;
+  const professional = appointment.professional!;
+
   const [open, setOpen] = useState(false);
   if (appointment.id === 1) {
-    appointment.status.name = Status.PENDING;
+    status.name = Status.PENDING;
   }
 
   if (appointment.id === 2) {
-    appointment.status.name = Status.FINISHED;
+    status.name = Status.FINISHED;
   }
 
   if (appointment.id === 3) {
-    appointment.status.name = Status.CANCELLED;
+    status.name = Status.CANCELLED;
   }
 
   return (
@@ -40,19 +44,19 @@ const DashboardItem = ({ appointment }: DashboardItemProps) => {
           </Tooltip>
         </CardHeader>
         <DateTime style={{ color: '#a49e93', fontSize: '.9rem', fontWeight: '300' }}>{appointment.appointmentDateTime}</DateTime>
-        <Tag status={appointment.status} />
+        <Tag status={appointment.status!} />
       </Card>
       <Modal open={open} setOpen={setOpen}>
         <Title>Agendamento</Title>
-        <Typography>Profissional: {appointment.professional.firstName} {appointment.professional.lastName}</Typography>
-        <Typography>Contato: {appointment.professional.phone}</Typography>
+        <Typography>Profissional: {professional.firstName} {professional.lastName}</Typography>
+        <Typography>Contato: {professional.phone}</Typography>
         <Typography>
           Duração: {' '}
-          <Duration>{appointment.work.estimatedTime}</Duration>
+          <Duration duration={work.estimatedTime!} />
         </Typography>
         <Typography>
           Valor: {' '}
-          <Currency>{appointment.work.price}</Currency>
+          <Currency>{Number(work.price)}</Currency>
         </Typography>
 
         <Button variant="contained" color="error">

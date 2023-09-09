@@ -4,10 +4,10 @@ import { Professional } from "./Professional";
 import { Work } from "./Work";
 
 export interface Appointment {
-  id: number;
-  status: AppointmentStatus;
+  id?: number | null;
   appointmentDateTime: Date;
-  customer: Customer;
+  status?: AppointmentStatus;
+  customer?: Customer;
   professional: Professional;
   work: Work;
 }
