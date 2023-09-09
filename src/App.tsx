@@ -3,6 +3,7 @@ import { GlobalStyles } from "./styles/global";
 import Home from "./components/pages/HomePage";
 import Appointments from "./components/pages/AppointmentsPage";
 import { ThemeProvider, createTheme } from "@mui/material";
+import NewAppointmentPage from "./components/pages/AppointmentsPage/NewAppointmentPage";
 
 const App = () => {
   const theme = createTheme({
@@ -18,6 +19,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/appointments" element={<Appointments />} />
+            <Route path="/appointments/new" element={<NewAppointmentPage />} />
           </Routes>
         </BrowserRouter>
         <GlobalStyles />
