@@ -64,10 +64,10 @@ const NewAppointmentPage = () => {
       work: {
         id: selectedWork!,
       },
+      customer: {
+        id: 1,
+      }
     });
-    console.log(selectedProfessional);
-    console.log(selectedWork);
-    console.log(selectedDate);
   };
 
   useEffect(() => {
@@ -100,7 +100,7 @@ const NewAppointmentPage = () => {
               <Grid item xs={12} md={6}>
                 <InputLabel id="professional-label">Selecione um profissional</InputLabel>
                 <Select
-                  style={{ width: '100%' }}
+                  style={{ width: '100%', marginTop: '8px' }}
                   labelId="professional-label"
                   id="professional-select"
                   value={selectedProfessional ? selectedProfessional.toString() : ''}
@@ -120,7 +120,7 @@ const NewAppointmentPage = () => {
               <Grid item xs={12} md={6}>
                 <InputLabel id="work-label">Selecione o tipo de serviço</InputLabel>
                 <Select
-                  style={{ width: '100%' }}
+                  style={{ width: '100%', marginTop: '8px' }}
                   labelId="work-label"
                   id="work-select"
                   value={selectedWork ? selectedWork.toString() : ''}

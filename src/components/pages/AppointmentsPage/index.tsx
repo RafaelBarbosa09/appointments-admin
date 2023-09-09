@@ -1,23 +1,10 @@
 import { Button, Container } from "@mui/material";
 import HeaderMenu from "../../shared/HeaderMenu";
-import { useEffect, useState } from "react";
-import { getAllAppointments } from "../../../services/appointments";
-import { Appointment } from "../../../utils/types/Appointment";
 import Dashboard from "../../shared/Dashboard";
+import { useAppointments } from "../../../contexts/AppointmentProvider";
 
 export const Appointments = () => {
-  const [appointments, setAppointments] = useState<Appointment[]>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await getAllAppointments();
-      if (response) {
-        setAppointments(response);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const { appointments } = useAppointments();
 
   return (
     <>

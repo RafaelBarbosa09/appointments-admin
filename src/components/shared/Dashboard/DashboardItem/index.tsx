@@ -8,7 +8,7 @@ import { useState } from "react";
 import { Button, Card, CardHeader, Title } from "./styles";
 import Currency from "../../Corrency";
 import { Tag } from "../../Tag";
-import { Status } from "../../../../utils/types/Status";
+import { useAppointments } from "../../../../contexts/AppointmentProvider";
 
 interface DashboardItemProps {
   appointment: Appointment;
@@ -20,16 +20,11 @@ const DashboardItem = ({ appointment }: DashboardItemProps) => {
   const professional = appointment.professional!;
 
   const [open, setOpen] = useState(false);
-  if (appointment.id === 1) {
-    status.name = Status.PENDING;
-  }
+  const { updateStatus } = useAppointments();
 
-  if (appointment.id === 2) {
-    status.name = Status.FINISHED;
-  }
-
-  if (appointment.id === 3) {
-    status.name = Status.CANCELLED;
+  const handleClick = () => {
+    setOpen(false);
+    updateStatus(appointment.id!);
   }
 
   return (
@@ -44,7 +39,7 @@ const DashboardItem = ({ appointment }: DashboardItemProps) => {
           </Tooltip>
         </CardHeader>
         <DateTime style={{ color: '#a49e93', fontSize: '.9rem', fontWeight: '300' }}>{appointment.appointmentDateTime}</DateTime>
-        <Tag status={appointment.status!} />
+        <Tag status={status} />
       </Card>
       <Modal open={open} setOpen={setOpen}>
         <Title>Agendamento</Title>
@@ -59,7 +54,11 @@ const DashboardItem = ({ appointment }: DashboardItemProps) => {
           <Currency>{Number(work.price)}</Currency>
         </Typography>
 
-        <Button variant="contained" color="error">
+        <Button
+          variant="contained"
+          color="error"
+          onClick={handleClick}
+        >
           Cancelar
         </Button>
       </Modal>

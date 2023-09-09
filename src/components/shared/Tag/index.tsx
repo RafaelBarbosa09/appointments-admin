@@ -7,7 +7,6 @@ export interface TagProps {
 }
 
 export const Tag = ({ status }: TagProps) => {
-  console.log(status);
   return (
     <StyledTag status={status}>
       <Typography component="span" fontWeight={500}>
