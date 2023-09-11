@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Container, FormHelperText, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from "@mui/material";
+import { Alert, Button, Container, FormHelperText, Grid, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from "@mui/material";
 import HeaderMenu from "../../../shared/HeaderMenu";
 import DateTimePicker from "../../../shared/DateTimePicker";
 import { Professional } from "../../../../utils/types/Professional";
@@ -7,7 +7,9 @@ import { Work } from "../../../../utils/types/Work";
 import { getAllWorks } from "../../../../services/works";
 import { getAllProfessionals } from "../../../../services/professionals";
 import { Card } from "./styles";
-import { createAppointment } from "../../../../services/appointments";
+import { createAppointment, getAllAppointments } from "../../../../services/appointments";
+import { useAppointments } from "../../../../contexts/AppointmentProvider";
+import CloseIcon from '@mui/icons-material/Close';
 
 const NewAppointmentPage = () => {
   const [professionals, setProfessionals] = useState<Professional[]>([]);
@@ -15,6 +17,8 @@ const NewAppointmentPage = () => {
   const [works, setWorks] = useState<Work[]>([]);
   const [selectedWork, setSelectedWork] = useState<number | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [success, setSuccess] = useState(true);
+  const { setAppointments } = useAppointments();
 
   const [validationErrors, setValidationErrors] = useState({
     professional: false,
@@ -56,7 +60,7 @@ const NewAppointmentPage = () => {
       return;
     }
 
-    await createAppointment({
+    const appointmentCreated = await createAppointment({
       appointmentDateTime: selectedDate!,
       professional: {
         id: selectedProfessional!,
@@ -68,13 +72,27 @@ const NewAppointmentPage = () => {
         id: 1,
       }
     });
+
+    if (!appointmentCreated) {
+      <Alert severity="error">Erro ao realizar agendamento!</Alert>
+      setSuccess(false);
+      return;
+    }
+
+    setSelectedProfessional(null);
+    setSelectedWork(null);
+    setSelectedDate(null);
+    setSuccess(true);
+
+    const appointments = await getAllAppointments();
+    setAppointments(appointments);
   };
 
   useEffect(() => {
-    const fetchAppointmentsData = async () => {
-      const appointments = await getAllProfessionals();
-      if (appointments) {
-        setProfessionals(appointments);
+    const fetchProfessionalsData = async () => {
+      const professionals = await getAllProfessionals();
+      if (professionals) {
+        setProfessionals(professionals);
       }
     };
 
@@ -85,13 +103,32 @@ const NewAppointmentPage = () => {
       }
     };
 
-    fetchAppointmentsData();
+    fetchProfessionalsData();
     fetchWorksData();
   }, []);
 
   return (
     <>
       <HeaderMenu title="Agendamentos" />
+      {success && (
+        <Alert action={
+          <IconButton
+            aria-label="close"
+            color="inherit"
+            size="small"
+            onClick={() => {
+              setSuccess(false);
+            }}
+          >
+            <CloseIcon fontSize="inherit" />
+          </IconButton>
+        }
+          sx={{ margin: '-2rem 1rem 1rem 1rem', top: '4rem' }}
+          variant="filled"
+          severity="success">
+          Agendamento realizado com sucesso!
+        </Alert>
+      )}
       <Container>
         <Card sx={{ maxWidth: '800px', margin: '0 auto' }}>
           <form onSubmit={handleSubmit}>
