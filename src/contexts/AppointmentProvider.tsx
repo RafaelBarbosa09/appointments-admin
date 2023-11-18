@@ -1,6 +1,6 @@
-import { ReactNode, createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { Appointment } from "../utils/types/Appointment";
-import { getAllAppointments, updateAppointmentStatus } from "../services/appointments";
+import { getAppointmentsByCustomerId, updateAppointmentStatus } from "../services/appointments";
 
 interface AppointmentContextData {
   appointments: Appointment[];
@@ -19,7 +19,7 @@ export const AppointmentProvider = ({ children }: AppointmentProviderProps) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await getAllAppointments();
+      const response = await getAppointmentsByCustomerId(3);
       if (response) {
         setAppointments(response);
       }
@@ -30,7 +30,7 @@ export const AppointmentProvider = ({ children }: AppointmentProviderProps) => {
 
   const updateStatus = async (id: number) => {
     await updateAppointmentStatus(id);
-    const newAppointments = await getAllAppointments();
+    const newAppointments = await getAppointmentsByCustomerId(3);
     setAppointments(newAppointments);
   };
 
@@ -46,6 +46,5 @@ export const AppointmentProvider = ({ children }: AppointmentProviderProps) => {
 };
 
 export const useAppointments = () => {
-  const context = useContext(AppointmentContext);
-  return context;
+  return useContext(AppointmentContext);
 };
