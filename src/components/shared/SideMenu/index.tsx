@@ -1,5 +1,4 @@
-
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Close, Logout } from '@mui/icons-material';
 import { CloseBtn, Drawer, List, ListItem } from './styles';
 import { ListItemIcon, ListItemText } from '@mui/material';
@@ -10,6 +9,13 @@ interface SideMenuProps {
 }
 
 const SideMenu = ({ open, onClose }: SideMenuProps) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  }
+
   return (
     <Drawer anchor="left" open={open} onClose={onClose}>
       <CloseBtn onClick={onClose}>
@@ -24,7 +30,7 @@ const SideMenu = ({ open, onClose }: SideMenuProps) => {
         </ListItem>
       </List>
       <List style={{ position: 'absolute', bottom: 0, width: '100%' }}>
-        <ListItem onClick={() => alert("Logout")}>
+        <ListItem onClick={handleLogout} sx={{ cursor: 'pointer' }}>
           <ListItemIcon>
             <Logout style={{ color: 'white' }} />
           </ListItemIcon>
