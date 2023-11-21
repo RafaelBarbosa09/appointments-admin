@@ -21,9 +21,7 @@ export const getAppointmentsByCustomerId = async (id: number): Promise<Appointme
 }
 
 export const createAppointment = async (appointment: Appointment) => {
-  const response = await api.post('/appointments', {
-    ...appointment
-  }, {
+  const response = await api.post('/appointments', appointment, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('token')}`
     }
@@ -32,10 +30,11 @@ export const createAppointment = async (appointment: Appointment) => {
 }
 
 export const updateAppointmentStatus = async (id: number) => {
-  const response = await api.patch(`/appointments/${id}`, {
+  const response = await api.patch(`/appointments/${id}`, {}, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('token')}`
     }
   });
+
   return response.data;
 }; 

@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import React, { createContext, ReactNode, useContext, useState } from "react";
 import { Appointment } from "../utils/types/Appointment";
 import { getAppointmentsByCustomerId, updateAppointmentStatus } from "../services/appointments";
 
@@ -19,7 +19,7 @@ export const AppointmentProvider = ({ children }: AppointmentProviderProps) => {
 
   const updateStatus = async (id: number) => {
     await updateAppointmentStatus(id);
-    const newAppointments = await getAppointmentsByCustomerId(3);
+    const newAppointments = await getAppointmentsByCustomerId(1);
     setAppointments(newAppointments);
   };
 

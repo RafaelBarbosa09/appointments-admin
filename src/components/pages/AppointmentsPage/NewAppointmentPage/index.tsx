@@ -17,7 +17,7 @@ const NewAppointmentPage = () => {
   const [works, setWorks] = useState<Work[]>([]);
   const [selectedWork, setSelectedWork] = useState<number | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [success, setSuccess] = useState(true);
+  const [success, setSuccess] = useState(false);
   const { setAppointments } = useAppointments();
 
   const [validationErrors, setValidationErrors] = useState({

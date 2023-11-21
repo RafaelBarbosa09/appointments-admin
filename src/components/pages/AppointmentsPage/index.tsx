@@ -4,13 +4,22 @@ import Dashboard from "../../shared/Dashboard";
 import { useAppointments } from "../../../contexts/AppointmentProvider";
 import { useEffect } from "react";
 import { getAppointmentsByCustomerId } from "../../../services/appointments";
+import { getLoggedUser } from "../../../services/users";
 
 export const Appointments = () => {
   const { appointments, setAppointments } = useAppointments();
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await getAppointmentsByCustomerId(3);
+      const token = localStorage.getItem('token');
+      const loggedUser = localStorage.getItem('loggedUser');
+      const user = await getLoggedUser(token!, loggedUser!);
+
+      if (user) {
+        console.log(user);
+      }
+
+      const response = await getAppointmentsByCustomerId(1);
       if (response) {
         setAppointments(response);
       }

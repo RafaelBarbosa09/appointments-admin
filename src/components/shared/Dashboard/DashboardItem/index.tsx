@@ -47,7 +47,7 @@ const DashboardItem = ({ appointment }: DashboardItemProps) => {
         <Typography>Contato: {professional.phone}</Typography>
         <Typography>
           Duração: {' '}
-          <Duration duration={work.estimatedTime!} />
+          <Duration duration={Number(work.estimatedTime)!} />
         </Typography>
         <Typography>
           Valor: {' '}

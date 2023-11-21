@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 import { formatDuration } from "../../../utils/format/duration";
 
 interface DurationProps {
-  duration: string;
+  duration: number;
 }
 
 const Duration = ({ duration }: DurationProps) => {
