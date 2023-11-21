@@ -17,17 +17,6 @@ export const AppointmentContext = createContext<AppointmentContextData>({} as Ap
 export const AppointmentProvider = ({ children }: AppointmentProviderProps) => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const response = await getAppointmentsByCustomerId(3);
-  //     if (response) {
-  //       setAppointments(response);
-  //     }
-  //   };
-  //
-  //   fetchData();
-  // }, []);
-
   const updateStatus = async (id: number) => {
     await updateAppointmentStatus(id);
     const newAppointments = await getAppointmentsByCustomerId(3);

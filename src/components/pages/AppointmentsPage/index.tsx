@@ -2,9 +2,22 @@ import { Button, Container } from "@mui/material";
 import HeaderMenu from "../../shared/HeaderMenu";
 import Dashboard from "../../shared/Dashboard";
 import { useAppointments } from "../../../contexts/AppointmentProvider";
+import { useEffect } from "react";
+import { getAppointmentsByCustomerId } from "../../../services/appointments";
 
 export const Appointments = () => {
-  const { appointments } = useAppointments();
+  const { appointments, setAppointments } = useAppointments();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getAppointmentsByCustomerId(3);
+      if (response) {
+        setAppointments(response);
+      }
+    };
+
+    fetchData();
+  }, [setAppointments]);
 
   return (
     <>

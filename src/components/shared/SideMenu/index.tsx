@@ -13,6 +13,7 @@ const SideMenu = ({ open, onClose }: SideMenuProps) => {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('loggedUser');
     navigate('/login');
   }
 

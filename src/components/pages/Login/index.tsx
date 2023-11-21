@@ -22,13 +22,17 @@ export const Login = () => {
 
         const data = await login({ login: username, password });
 
-        if (!data) {
+        if (!data || !data.token) {
             return;
         }
 
-        localStorage.setItem('token', data.token);
+        const { token } = data;
+
+        localStorage.setItem('token', token);
+        localStorage.setItem('loggedUser', username);
+
         navigate('/');
-    }
+    };
 
     return (
         <Box

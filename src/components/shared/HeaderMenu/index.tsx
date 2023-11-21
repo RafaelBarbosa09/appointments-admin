@@ -4,6 +4,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Toolbar, Typography } from "@mui/material";
 import SideMenu from "../SideMenu";
 import { Appbar, IconButton } from "./styles";
+import { useAuth } from "../../../contexts/AuthProvider";
 
 interface HeaderMenuProps {
   title: string;
@@ -11,6 +12,7 @@ interface HeaderMenuProps {
 
 const HeaderMenu = ({ title }: HeaderMenuProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { loggedUser } = useAuth();
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -31,7 +33,7 @@ const HeaderMenu = ({ title }: HeaderMenuProps) => {
             {title}
           </Typography>
           <Typography noWrap sx={{ marginLeft: 'auto' }}>
-            Olá, Fulano
+            Olá, {loggedUser}
           </Typography>
         </Toolbar>
       </Appbar>
