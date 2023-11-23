@@ -33,7 +33,7 @@ const HeaderMenu = ({ title }: HeaderMenuProps) => {
             {title}
           </Typography>
           <Typography noWrap sx={{ marginLeft: 'auto' }}>
-            Olá, {loggedUser}
+            Olá, {loggedUser?.username}
           </Typography>
         </Toolbar>
       </Appbar>

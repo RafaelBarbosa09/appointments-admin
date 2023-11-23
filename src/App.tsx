@@ -7,6 +7,7 @@ import NewAppointmentPage from "./components/pages/AppointmentsPage/NewAppointme
 import { AppointmentProvider } from "./contexts/AppointmentProvider";
 import { AuthProvider } from "./contexts/AuthProvider";
 import { Login } from "./components/pages/Login";
+import TimeSlotsPage from "./components/pages/TimeSlotsPage";
 
 const App = () => {
   const theme = createTheme({
@@ -26,6 +27,7 @@ const App = () => {
                 <Route path="/appointments" element={<Appointments />} />
                 <Route path="/appointments/new" element={<NewAppointmentPage />} />
                 <Route path="login" element={<Login />} />
+                <Route path="/timeslots" element={<TimeSlotsPage />} />
                 <Route path="*" element={<h1>Not Found</h1>} />
               </Routes>
             </AuthProvider>

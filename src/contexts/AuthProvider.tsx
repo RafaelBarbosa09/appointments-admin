@@ -17,7 +17,7 @@ export const AuthContext = createContext({} as AuthContextData);
 export const AuthProvider = ({ children }: AuthProviderProps) => {
     const navigate = useNavigate();
     const [authenticated, setAuthenticated] = useState(false);
-    const [loggedUser, setLoggedUser] = useState('');
+    const [loggedUser, setLoggedUser] = useState({} as any);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -25,13 +25,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
         if (!token) {
             setAuthenticated(false);
-            setLoggedUser('');
+            setLoggedUser(null);
             navigate('/login');
             return;
         }
 
         setAuthenticated(true);
-        setLoggedUser(loggedUser!);
+        setLoggedUser(JSON.parse(loggedUser!));
     }, [navigate]);
 
     return (

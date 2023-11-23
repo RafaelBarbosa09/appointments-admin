@@ -14,6 +14,7 @@ const SideMenu = ({ open, onClose }: SideMenuProps) => {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('loggedUser');
+    localStorage.removeItem('user');
     navigate('/login');
   }
 
@@ -28,6 +29,9 @@ const SideMenu = ({ open, onClose }: SideMenuProps) => {
         </ListItem>
         <ListItem>
           <Link to="/appointments">Agendamentos</Link>
+        </ListItem>
+        <ListItem>
+          <Link to="/timeslots">Horários</Link>
         </ListItem>
       </List>
       <List style={{ position: 'absolute', bottom: 0, width: '100%' }}>

@@ -4,12 +4,16 @@ import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { login } from "../../../services/authentication";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../contexts/AuthProvider";
+import { getLoggedUser } from "../../../services/users";
 
 export const Login = () => {
     const navigate = useNavigate();
+    // const {  } = useAuth();
     const [showPassword, setShowPassword] = useState(false);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [user, setUser] = useState({} as any);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -29,9 +33,19 @@ export const Login = () => {
         const { token } = data;
 
         localStorage.setItem('token', token);
-        localStorage.setItem('loggedUser', username);
+
+        await handleGetLoggedUser(token, username);
 
         navigate('/');
+    };
+
+    const handleGetLoggedUser = async (token: string, username: string) => {
+        await getLoggedUser(token, username).then((response) => {
+            setUser(response);
+            localStorage.setItem('loggedUser', JSON.stringify(response));
+        }).catch((error) => {
+            console.log(error);
+        });
     };
 
     return (
