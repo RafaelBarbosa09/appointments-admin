@@ -34,3 +34,21 @@ const isSameMonth = (date1: Date, date2: Date): boolean => {
 const isSameYear = (date1: Date, date2: Date): boolean => {
   return new Date(date1).getFullYear() === date2.getFullYear();
 }
+
+export const formatDateInput = (value: string) => {
+  const cleanedValue = value.replace(/\D/g, ''); // Remove caracteres não numéricos
+  let formattedValue = '';
+
+  if (cleanedValue.length > 2) {
+    formattedValue = `${cleanedValue.slice(0, 2)}/${cleanedValue.slice(2, 4)}/${cleanedValue.slice(4, 8)}`;
+  } else {
+    formattedValue = cleanedValue;
+  }
+
+  return formattedValue;
+};
+
+export const formatDateForDatabase = (date: string) => {
+  const [day, month, year] = date.split('/');
+  return `${year}-${month}-${day}`;
+}

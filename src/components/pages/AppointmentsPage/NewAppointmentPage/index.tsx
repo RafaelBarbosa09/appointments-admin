@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Alert, Button, Container, FormHelperText, Grid, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from "@mui/material";
+import { Alert, Button, Container, FormHelperText, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from "@mui/material";
 import HeaderMenu from "../../../shared/HeaderMenu";
 import DateTimePicker from "../../../shared/DateTimePicker";
 import { Professional } from "../../../../utils/types/Professional";
@@ -9,7 +9,6 @@ import { getAllProfessionals } from "../../../../services/professionals";
 import { Card } from "./styles";
 import { createAppointment, getAllAppointments } from "../../../../services/appointments";
 import { useAppointments } from "../../../../contexts/AppointmentProvider";
-import CloseIcon from '@mui/icons-material/Close';
 
 const NewAppointmentPage = () => {
   const [professionals, setProfessionals] = useState<Professional[]>([]);
@@ -111,18 +110,8 @@ const NewAppointmentPage = () => {
     <>
       <HeaderMenu title="Agendamentos" />
       {success && (
-        <Alert action={
-          <IconButton
-            aria-label="close"
-            color="inherit"
-            size="small"
-            onClick={() => {
-              setSuccess(false);
-            }}
-          >
-            <CloseIcon fontSize="inherit" />
-          </IconButton>
-        }
+        <Alert
+          onClose={() => setSuccess(false)}
           sx={{ margin: '-2rem 1rem 1rem 1rem', top: '4rem' }}
           variant="filled"
           severity="success">

@@ -31,7 +31,7 @@ const SideMenu = ({ open, onClose }: SideMenuProps) => {
           <Link to="/appointments">Agendamentos</Link>
         </ListItem>
         <ListItem>
-          <Link to="/timeslots">Horários</Link>
+          <Link to="/availability">Disponibilidade</Link>
         </ListItem>
       </List>
       <List style={{ position: 'absolute', bottom: 0, width: '100%' }}>

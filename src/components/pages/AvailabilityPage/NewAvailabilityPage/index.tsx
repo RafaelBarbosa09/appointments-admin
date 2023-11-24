@@ -1,27 +1,19 @@
-import { Button, Container, Grid, InputAdornment, TextField, Typography } from "@mui/material";
-import HeaderMenu from "../../shared/HeaderMenu";
+import { Alert, Button, Container, Grid, InputAdornment, TextField, Typography } from "@mui/material";
+import HeaderMenu from "../../../shared/HeaderMenu";
 import { Card } from "./styles";
 import React, { useState } from "react";
 import { CalendarIcon, TimeIcon } from "@mui/x-date-pickers";
-import { formatTime } from "../../../utils/format/time";
-import { createTimeSlot } from "../../../services/timeSlots";
-import { CreateAvailability } from "../../../utils/types/Availability";
-import { createAvailability } from "../../../services/availability";
+import { formatTime } from "../../../../utils/format/time";
+import { CreateAvailability } from "../../../../utils/types/Availability";
+import { createAvailability } from "../../../../services/availability";
+import { formatDateForDatabase, formatDateInput } from "../../../../utils/format/date";
 
-const TimeSlotsPage = () => {
+const NewAvailabilityPage = () => {
     const [startTime, setStartTime] = useState('');
     const [endTime, setEndTime] = useState('');
     const [date, setDate] = useState('');
-
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-
-        await createTimeSlot({ startTime, endTime }).then(() => {
-            console.log('Horário criado com sucesso!');
-        }).catch((error) => {
-            console.log(error);
-        });
-    }
+    const [success, setSuccess] = useState(false);
+    const [error, setError] = useState(false);
 
     const handleStartTimeChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const value = formatTime(event.target.value);
@@ -38,24 +30,11 @@ const TimeSlotsPage = () => {
         setDate(value);
     };
 
-    const formatDateInput = (value: string) => {
-        const cleanedValue = value.replace(/\D/g, ''); // Remove caracteres não numéricos
-        let formattedValue = '';
-
-        if (cleanedValue.length > 2) {
-            formattedValue = `${cleanedValue.slice(0, 2)}/${cleanedValue.slice(2, 4)}/${cleanedValue.slice(4, 8)}`;
-        } else {
-            formattedValue = cleanedValue;
-        }
-
-        return formattedValue;
-    };
-
     const handleCreateAvailability = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         const availability: CreateAvailability = {
-            date: '2021-10-20',
+            date: formatDateForDatabase(date),
             timeSlot: {
                 startTime,
                 endTime,
@@ -63,15 +42,39 @@ const TimeSlotsPage = () => {
         };
 
         await createAvailability(availability).then(() => {
-            console.log('Horário criado com sucesso!');
+            setSuccess(true);
+            setError(false);
+            setStartTime('');
+            setEndTime('');
+            setDate('');
         }).catch((error) => {
-            console.log(error);
+            setError(true);
         });
     };
 
     return (
         <>
             <HeaderMenu title="Horários" />
+            {success && (
+                <Alert
+                    severity="success"
+                    variant="filled"
+                    onClose={() => setSuccess(false)}
+                    sx={{ margin: '-2rem 1rem 1rem 1rem', top: '4rem' }}>
+                    Disponibilidade criada com sucesso.
+                </Alert>
+            )}
+
+            {error && (
+                <Alert
+                    severity="error"
+                    variant="filled"
+                    onClose={() => setError(false)}
+                    sx={{ margin: '-2rem 1rem 1rem 1rem', top: '4rem' }}>
+                    Erro ao criar horário. Tente novamente.
+                </Alert>
+            )}
+
             <Container>
                 <Card sx={{ maxWidth: '800px', margin: '0 auto' }}>
                     <form onSubmit={handleCreateAvailability}>
@@ -150,4 +153,4 @@ const TimeSlotsPage = () => {
     );
 };
 
-export default TimeSlotsPage;
+export default NewAvailabilityPage;
