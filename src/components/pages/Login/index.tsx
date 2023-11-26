@@ -3,7 +3,7 @@ import { Paper } from "./styles";
 import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { login } from "../../../services/authentication";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../contexts/AuthProvider";
 import { getLoggedUser } from "../../../services/users";
 
@@ -110,7 +110,9 @@ export const Login = () => {
                             <Grid item sx={{ textAlign: 'center' }}>
                                 <Button sx={{ textTransform: 'none' }}>
                                     <Typography fontSize={12}>
-                                        Não tem uma conta? Cadastre-se!
+                                        <Link to="/signup">
+                                            Não tem uma conta? Cadastre-se!
+                                        </Link>
                                     </Typography>
                                 </Button>
                             </Grid>

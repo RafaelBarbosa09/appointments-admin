@@ -11,6 +11,7 @@ import NewAvailabilityPage from "./components/pages/AvailabilityPage/NewAvailabi
 import AvailabilityPage from "./components/pages/AvailabilityPage";
 import PrivateRoute from "./components/shared/PrivateRoute";
 import ROLE from "./utils/types/Role";
+import SignUpPage from "./components/pages/SignUpPage";
 
 const App = () => {
   const theme = createTheme({
@@ -30,6 +31,7 @@ const App = () => {
                 <Route path="/appointments" element={<Appointments />} />
                 <Route path="/appointments/new" element={<NewAppointmentPage />} />
                 <Route path="login" element={<Login />} />
+                <Route path="/signup" element={<SignUpPage />} />
                 <Route path="/availability/new" element={<PrivateRoute roles={[ROLE.ADMIN]} component={NewAvailabilityPage} />} />
                 <Route path="/availability" element={<AvailabilityPage />} />
                 <Route path="*" element={<h1>Not Found</h1>} />

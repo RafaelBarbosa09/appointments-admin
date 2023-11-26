@@ -16,6 +16,7 @@ export const AuthContext = createContext({} as AuthContextData);
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
     const navigate = useNavigate();
+    const location = window.location.pathname;
     const [authenticated, setAuthenticated] = useState(false);
     const [loggedUser, setLoggedUser] = useState({} as any);
 
@@ -23,7 +24,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         const token = localStorage.getItem('token');
         const loggedUser = localStorage.getItem('loggedUser');
 
-        if (!token) {
+        if (!token && location !== '/signup') {
             setAuthenticated(false);
             setLoggedUser(null);
             navigate('/login');
