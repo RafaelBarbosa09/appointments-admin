@@ -1,5 +1,6 @@
 import { Address } from "./Address";
 import { Appointment } from "./Appointment";
+import { User } from "./User";
 
 export interface Customer {
   id: number;
@@ -11,4 +12,5 @@ export interface Customer {
   birthDate?: Date;
   appointments?: Appointment[];
   address?: Address;
+  user?: User;
 }

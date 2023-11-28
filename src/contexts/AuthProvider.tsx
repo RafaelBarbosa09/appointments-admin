@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
         setAuthenticated(true);
         setLoggedUser(JSON.parse(loggedUser!));
-    }, [navigate]);
+    }, [navigate, location]);
 
     return (
         <AuthContext.Provider value={{

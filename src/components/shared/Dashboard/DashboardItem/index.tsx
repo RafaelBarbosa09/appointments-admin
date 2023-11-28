@@ -9,22 +9,26 @@ import { Button, Card, CardHeader, Title } from "./styles";
 import Currency from "../../Corrency";
 import { Tag } from "../../Tag";
 import { useAppointments } from "../../../../contexts/AppointmentProvider";
+import { useAuth } from "../../../../contexts/AuthProvider";
 
 interface DashboardItemProps {
   appointment: Appointment;
 }
 
 const DashboardItem = ({ appointment }: DashboardItemProps) => {
-  const status = appointment.status!;
-  const work = appointment.work!;
-  const professional = appointment.professional!;
+  const status = appointment?.status;
+  const work = appointment?.work;
+  const professional = appointment?.professional;
 
   const [open, setOpen] = useState(false);
   const { updateStatus } = useAppointments();
+  const { loggedUser } = useAuth();
 
   const handleClick = () => {
+    const { customer } = loggedUser;
+
     setOpen(false);
-    updateStatus(appointment.id!);
+    updateStatus(appointment.id!, customer.id);
   }
 
   return (
@@ -39,12 +43,12 @@ const DashboardItem = ({ appointment }: DashboardItemProps) => {
           </Tooltip>
         </CardHeader>
         <DateTime style={{ color: '#a49e93', fontSize: '.9rem', fontWeight: '300' }}>{appointment.appointmentDateTime}</DateTime>
-        <Tag status={status} />
+        {status && <Tag status={status} />}
       </Card>
       <Modal open={open} setOpen={setOpen}>
         <Title>Agendamento</Title>
-        <Typography>Profissional: {professional.firstName} {professional.lastName}</Typography>
-        <Typography>Contato: {professional.phone}</Typography>
+        <Typography>Profissional: {professional?.firstName} {professional?.lastName}</Typography>
+        <Typography>Contato: {professional?.phone}</Typography>
         <Typography>
           Duração: {' '}
           <Duration duration={Number(work.estimatedTime)!} />

@@ -8,17 +8,21 @@ import { useAuth } from "../../../contexts/AuthProvider";
 
 export const Appointments = () => {
   const { appointments, setAppointments } = useAppointments();
+  const { loggedUser } = useAuth();
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await getAppointmentsByCustomerId(1);
+      const { customer, professional } = loggedUser;
+      const id = customer ? customer.id : professional.id;
+
+      const response = await getAppointmentsByCustomerId(id);
       if (response) {
         setAppointments(response);
       }
     };
 
     fetchData();
-  }, [setAppointments]);
+  }, [setAppointments, loggedUser]);
 
   return (
     <>

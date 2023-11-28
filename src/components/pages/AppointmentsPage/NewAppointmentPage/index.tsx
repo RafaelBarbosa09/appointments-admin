@@ -7,8 +7,8 @@ import { Work } from "../../../../utils/types/Work";
 import { getAllWorks } from "../../../../services/works";
 import { getAllProfessionals } from "../../../../services/professionals";
 import { Card } from "./styles";
-import { createAppointment, getAllAppointments } from "../../../../services/appointments";
-import { useAppointments } from "../../../../contexts/AppointmentProvider";
+import { createAppointment } from "../../../../services/appointments";
+import { useAuth } from "../../../../contexts/AuthProvider";
 
 const NewAppointmentPage = () => {
   const [professionals, setProfessionals] = useState<Professional[]>([]);
@@ -17,7 +17,7 @@ const NewAppointmentPage = () => {
   const [selectedWork, setSelectedWork] = useState<number | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [success, setSuccess] = useState(false);
-  const { setAppointments } = useAppointments();
+  const { loggedUser } = useAuth();
 
   const [validationErrors, setValidationErrors] = useState({
     professional: false,
@@ -68,7 +68,7 @@ const NewAppointmentPage = () => {
         id: selectedWork!,
       },
       customer: {
-        id: 1,
+        id: loggedUser.customer?.id,
       }
     });
 
@@ -83,8 +83,8 @@ const NewAppointmentPage = () => {
     setSelectedDate(null);
     setSuccess(true);
 
-    const appointments = await getAllAppointments();
-    setAppointments(appointments);
+    // const appointments = await getAllAppointments();
+    // setAppointments(appointments);
   };
 
   useEffect(() => {
