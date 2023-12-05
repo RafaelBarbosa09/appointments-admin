@@ -19,3 +19,35 @@ export const getAppointmentsByProfessionalId = async (id: number) => {
 
   return response.data;
 };
+
+export const getProfessionalByUserId = async (userId: number) => {
+  try {
+    const response = await api.get(`/professionals/user/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+
+  return null;
+};
+
+export const createProfessional = async (professional: any, userId: number) => {
+  try {
+    const response = await api.post(`/professionals/user/${userId}`, professional, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+
+  return null;
+}; 

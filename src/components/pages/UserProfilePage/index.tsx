@@ -1,6 +1,7 @@
 import { Button, Container, Grid, TextField, Typography } from "@mui/material";
 import { Card } from "./styles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getCustomersByUserId } from "../../../services/customers";
 
 const UserProfilePage = () => {
     const [firstname, setFirstname] = useState('');
@@ -15,6 +16,32 @@ const UserProfilePage = () => {
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
     const [zipCode, setZipCode] = useState('');
+
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('loggedUser') || '{}');
+        const fetchData = async () => {
+            const customer = await getCustomersByUserId(Number(user.id));
+            if (customer) {
+                setFirstname(customer.firstName);
+                setLastname(customer.lastName);
+                setPhone(customer.phone);
+                setCpf(customer.cpf);
+                setRg(customer.rg);
+                setBirthDate(customer.birthdate);
+                setStreet(customer.address?.street);
+                setNumber(customer.address?.number);
+                setNeighborhood(customer.address?.neighborhood);
+                setCity(customer.address?.city);
+                setState(customer.address?.state);
+                setZipCode(customer.address?.zipCode);
+            }
+        }
+        fetchData();
+    }, []);
+
+    // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    //     event.preventDefault();
+    // }
 
     return (
         <Container sx={{ marginTop: '-1rem' }}>
