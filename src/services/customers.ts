@@ -15,3 +15,19 @@ export const getCustomersByUserId = async (userId: number) => {
 
     return null;
 };
+
+export const createCustomer = async (customer: any, userId: number) => {
+    try {
+        const response = await api.post(`/customer/user/${userId}`, customer, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        });
+
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+
+    return null;
+}; 
