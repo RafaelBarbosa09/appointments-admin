@@ -1,10 +1,8 @@
 import { Container, Paper, Typography } from "@mui/material";
-import HeaderMenu from "../../shared/HeaderMenu";
 
 const Home = () => {
   return (
     <>
-      <HeaderMenu title="Home" />
       <Container>
         <Paper elevation={3} style={{ padding: '16px' }}>
           <Typography variant="h4">Bem-vindo</Typography>

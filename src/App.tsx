@@ -12,6 +12,9 @@ import AvailabilityPage from "./components/pages/AvailabilityPage";
 import PrivateRoute from "./components/shared/PrivateRoute";
 import ROLE from "./utils/types/Role";
 import SignUpPage from "./components/pages/SignUpPage";
+import ProfileAdminPage from "./components/pages/AdminProfilePage";
+import UserProfilePage from "./components/pages/UserProfilePage";
+import Layout from "./components/shared/Layout";
 
 const App = () => {
   const theme = createTheme({
@@ -27,14 +30,18 @@ const App = () => {
           <BrowserRouter>
             <AuthProvider>
               <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/appointments" element={<Appointments />} />
-                <Route path="/appointments/new" element={<NewAppointmentPage />} />
+                <Route path="/" element={<Layout />}>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/appointments" element={<Appointments />} />
+                  <Route path="/appointments/new" element={<NewAppointmentPage />} />
+                  <Route path="/availability/new" element={<PrivateRoute roles={[ROLE.ADMIN]} component={NewAvailabilityPage} />} />
+                  <Route path="/profile/admin" element={<PrivateRoute roles={[ROLE.ADMIN]} component={ProfileAdminPage} />} />
+                  <Route path="/profile/user" element={<UserProfilePage />} />
+                  <Route path="/availability" element={<AvailabilityPage />} />
+                </Route>
+                <Route path="*" element={<h1>Not Found</h1>} />
                 <Route path="login" element={<Login />} />
                 <Route path="/signup" element={<SignUpPage />} />
-                <Route path="/availability/new" element={<PrivateRoute roles={[ROLE.ADMIN]} component={NewAvailabilityPage} />} />
-                <Route path="/availability" element={<AvailabilityPage />} />
-                <Route path="*" element={<h1>Not Found</h1>} />
               </Routes>
             </AuthProvider>
           </BrowserRouter>

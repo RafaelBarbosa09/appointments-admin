@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Alert, Button, Container, FormHelperText, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from "@mui/material";
-import HeaderMenu from "../../../shared/HeaderMenu";
 import DateTimePicker from "../../../shared/DateTimePicker";
 import { Professional } from "../../../../utils/types/Professional";
 import { Work } from "../../../../utils/types/Work";
@@ -108,7 +107,6 @@ const NewAppointmentPage = () => {
 
   return (
     <>
-      <HeaderMenu title="Agendamentos" />
       {success && (
         <Alert
           onClose={() => setSuccess(false)}

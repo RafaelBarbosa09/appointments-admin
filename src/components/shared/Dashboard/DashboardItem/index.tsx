@@ -8,28 +8,43 @@ import { useState } from "react";
 import { Button, Card, CardHeader, Title } from "./styles";
 import Currency from "../../Corrency";
 import { Tag } from "../../Tag";
-import { useAppointments } from "../../../../contexts/AppointmentProvider";
 import { useAuth } from "../../../../contexts/AuthProvider";
+import { getAppointmentsByProfessionalId } from "../../../../services/professionals";
+import { getAppointmentsByCustomerId, updateAppointmentStatus } from "../../../../services/appointments";
 
 interface DashboardItemProps {
   appointment: Appointment;
+  setAppointments: React.Dispatch<React.SetStateAction<Appointment[]>>;
 }
 
-const DashboardItem = ({ appointment }: DashboardItemProps) => {
+const DashboardItem = ({ appointment, setAppointments }: DashboardItemProps) => {
   const status = appointment?.status;
   const work = appointment?.work;
   const professional = appointment?.professional;
 
   const [open, setOpen] = useState(false);
-  const { updateStatus } = useAppointments();
   const { loggedUser } = useAuth();
 
   const handleClick = () => {
-    const { customer } = loggedUser;
-
     setOpen(false);
-    updateStatus(appointment.id!, customer.id);
+    updateStatus(appointment.id!);
   }
+
+  const updateStatus = async (id: number) => {
+    await updateAppointmentStatus(id);
+
+    const { customer, professional } = loggedUser;
+
+    let response;
+    if (professional) {
+      response = await getAppointmentsByProfessionalId(professional.id);
+    }
+
+    if (customer) {
+      response = await getAppointmentsByCustomerId(customer.id);
+    }
+    setAppointments(response);
+  };
 
   return (
     <>

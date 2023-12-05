@@ -1,5 +1,4 @@
 import { Alert, Container, Grid, InputAdornment, TextField, Typography } from "@mui/material";
-import HeaderMenu from "../../shared/HeaderMenu";
 import { Card } from "./styles";
 import { CalendarIcon } from "@mui/x-date-pickers";
 import { useState } from "react";
@@ -45,7 +44,6 @@ const AvailabilityPage = () => {
 
     return (
         <>
-            <HeaderMenu title="Disponibilidade" />
             {notFound && (
                 <Alert
                     severity="warning"

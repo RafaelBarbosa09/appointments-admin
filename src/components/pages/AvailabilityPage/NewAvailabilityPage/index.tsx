@@ -1,5 +1,4 @@
 import { Alert, Button, Container, Grid, InputAdornment, TextField, Typography } from "@mui/material";
-import HeaderMenu from "../../../shared/HeaderMenu";
 import { Card } from "./styles";
 import React, { useState } from "react";
 import { CalendarIcon, TimeIcon } from "@mui/x-date-pickers";
@@ -54,7 +53,6 @@ const NewAvailabilityPage = () => {
 
     return (
         <>
-            <HeaderMenu title="Horários" />
             {success && (
                 <Alert
                     severity="success"

@@ -1,21 +1,28 @@
 import { Button, Container } from "@mui/material";
-import HeaderMenu from "../../shared/HeaderMenu";
 import Dashboard from "../../shared/Dashboard";
-import { useAppointments } from "../../../contexts/AppointmentProvider";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getAppointmentsByCustomerId } from "../../../services/appointments";
 import { useAuth } from "../../../contexts/AuthProvider";
+import { getAppointmentsByProfessionalId } from "../../../services/professionals";
+import { Appointment } from "../../../utils/types/Appointment";
 
 export const Appointments = () => {
-  const { appointments, setAppointments } = useAppointments();
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
   const { loggedUser } = useAuth();
 
   useEffect(() => {
     const fetchData = async () => {
       const { customer, professional } = loggedUser;
-      const id = customer ? customer.id : professional.id;
 
-      const response = await getAppointmentsByCustomerId(id);
+      let response;
+      if (professional) {
+        response = await getAppointmentsByProfessionalId(professional.id);
+      }
+
+      if (customer) {
+        response = await getAppointmentsByCustomerId(customer.id);
+      }
+
       if (response) {
         setAppointments(response);
       }
@@ -25,20 +32,21 @@ export const Appointments = () => {
   }, [setAppointments, loggedUser]);
 
   return (
-    <>
-      <HeaderMenu title="Agendamentos" />
-      <Container>
-        <Button
-          variant="contained"
-          color="primary"
-          href="/appointments/new"
-          sx={{ marginBottom: '1rem' }}
-        >
-          Novo agendamento
-        </Button>
-        <Dashboard appointments={appointments} />
-      </Container>
-    </>
+    <Container>
+      {
+        loggedUser.customer && (
+          <Button
+            variant="contained"
+            color="primary"
+            href="/appointments/new"
+            sx={{ marginBottom: '1rem' }}
+          >
+            Novo agendamento
+          </Button>
+        )
+      }
+      <Dashboard setAppointments={setAppointments} appointments={appointments} />
+    </Container>
   );
 }
 

@@ -8,4 +8,14 @@ export const getAllProfessionals = async () => {
   });
 
   return response.data;
-}
+};
+
+export const getAppointmentsByProfessionalId = async (id: number) => {
+  const response = await api.get(`/appointments/professional/${id}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+  });
+
+  return response.data;
+};
