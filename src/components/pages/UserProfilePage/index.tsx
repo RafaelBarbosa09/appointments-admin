@@ -2,6 +2,7 @@ import { Alert, Button, Container, Grid, TextField, Typography } from "@mui/mate
 import { Card } from "./styles";
 import { useEffect, useState } from "react";
 import { createCustomer, getCustomersByUserId } from "../../../services/customers";
+import { getLoggedUser } from "../../../services/users";
 
 const UserProfilePage = () => {
     const [firstname, setFirstname] = useState('');
@@ -68,6 +69,12 @@ const UserProfilePage = () => {
             setMessage('Perfil atualizado com sucesso!');
             setError(false);
             setSuccess(true);
+
+            const token = localStorage.getItem('token') || '';
+            const loggedUser = await getLoggedUser(token, user.username);
+
+            localStorage.removeItem('loggedUser');
+            localStorage.setItem('loggedUser', JSON.stringify(loggedUser));
         } else {
             setMessage('Erro ao atualizar perfil!');
             setSuccess(false);
@@ -96,7 +103,7 @@ const UserProfilePage = () => {
                     {message}
                 </Alert>
             )}
-            <Container sx={{ marginTop: '-1rem' }}>
+            <Container sx={{ height: '100vh' }}>
                 <Card sx={{ maxWidth: '800px', margin: '0 auto' }}>
                     <Typography variant="h6">Editar Perfil</Typography>
                     <form onSubmit={handleSubmit}>
