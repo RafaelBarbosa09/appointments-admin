@@ -5,6 +5,7 @@ import { getAppointmentsByCustomerId } from "../../../services/appointments";
 import { useAuth } from "../../../contexts/AuthProvider";
 import { getAppointmentsByProfessionalId } from "../../../services/professionals";
 import { Appointment } from "../../../utils/types/Appointment";
+import ROLE from "../../../utils/types/Role";
 
 export const Appointments = () => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
@@ -31,10 +32,12 @@ export const Appointments = () => {
     fetchData();
   }, [setAppointments, loggedUser]);
 
+  const isUser = loggedUser?.role === ROLE.USER;
+
   return (
     <Container>
       {
-        loggedUser.customer && (
+        isUser && (
           <Button
             variant="contained"
             color="primary"

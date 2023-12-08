@@ -2,8 +2,14 @@ import { Authentication, RegisterAccountRequest } from "../utils/types/Authentic
 import api from "./api";
 
 export const login = async (credentials: Authentication) => {
-    const response = await api.post('/auth/login', credentials);
-    return response.data;
+    try {
+        const response = await api.post('/auth/login', credentials);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+
+    return null;
 };
 
 export const register = async (credentials: RegisterAccountRequest) => {
