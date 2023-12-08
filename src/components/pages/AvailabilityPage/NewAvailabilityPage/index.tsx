@@ -32,12 +32,15 @@ const NewAvailabilityPage = () => {
     const handleCreateAvailability = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
+        const loggedUser = JSON.parse(localStorage.getItem('loggedUser') || '{}');
+
         const availability: CreateAvailability = {
             date: formatDateForDatabase(date),
             timeSlot: {
                 startTime,
                 endTime,
-            }
+            },
+            professionalId: loggedUser.professional?.id,
         };
 
         await createAvailability(availability).then(() => {

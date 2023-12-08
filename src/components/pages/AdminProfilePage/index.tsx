@@ -2,6 +2,7 @@ import { Alert, Button, Container, Grid, TextField, Typography } from "@mui/mate
 import { Card } from "./styles";
 import { useEffect, useState } from "react";
 import { createProfessional, getProfessionalByUserId } from "../../../services/professionals";
+import { getLoggedUser } from "../../../services/users";
 
 const AdminProfilePage = () => {
     const [firstname, setFirstname] = useState('');
@@ -42,6 +43,13 @@ const AdminProfilePage = () => {
             setMessage('Perfil atualizado com sucesso!');
             setError(false);
             setSuccess(true);
+
+            const token = localStorage.getItem('token') || '';
+            const loggedUser = await getLoggedUser(token, user.username);
+
+            localStorage.removeItem('loggedUser');
+            localStorage.setItem('loggedUser', JSON.stringify(loggedUser));
+
         } else {
             setMessage('Erro ao atualizar perfil!');
             setSuccess(false);

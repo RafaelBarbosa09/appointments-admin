@@ -12,6 +12,11 @@ interface PrivateRouteProps {
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: RouteComponent, roles }) => {
     const { loggedUser } = useAuth();
     const userHasRequiredRole = roles.includes(loggedUser?.role as ROLE);
+    const isOnlyUser = roles.includes(loggedUser?.role as ROLE) && roles.length === 1;
+
+    if (!isOnlyUser) {
+        return <AccessDeniedPage />;
+    }
 
     if (userHasRequiredRole) {
         return <RouteComponent />

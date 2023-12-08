@@ -1,14 +1,17 @@
 import { Grid } from "@mui/material";
 import { TimeSlotDTO } from "../../utils/types/timeSlot";
 import TimeSlotItem from "./TimeSlotItem";
+import React from "react";
 
 interface TimeSlotProps {
     timeSlots: TimeSlotDTO[];
+    setTimeSlot?: React.Dispatch<React.SetStateAction<TimeSlotDTO>>;
 }
 
-const TimeSlots = ({ timeSlots }: TimeSlotProps) => {
+const TimeSlots = ({ timeSlots, setTimeSlot }: TimeSlotProps) => {
     const handleTimeSlotClick = (timeSlot: TimeSlotDTO) => {
-        console.log(timeSlot);
+        if (!setTimeSlot) return;
+        setTimeSlot(timeSlot);
     }
 
     return (

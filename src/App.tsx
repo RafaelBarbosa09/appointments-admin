@@ -33,11 +33,11 @@ const App = () => {
                 <Route path="/" element={<Layout />}>
                   <Route path="/" element={<Home />} />
                   <Route path="/appointments" element={<Appointments />} />
-                  <Route path="/appointments/new" element={<NewAppointmentPage />} />
+                  <Route path="/appointments/new" element={<PrivateRoute roles={[ROLE.USER]} component={NewAppointmentPage} />} />
                   <Route path="/availability/new" element={<PrivateRoute roles={[ROLE.ADMIN]} component={NewAvailabilityPage} />} />
                   <Route path="/profile/admin" element={<PrivateRoute roles={[ROLE.ADMIN]} component={ProfileAdminPage} />} />
+                  <Route path="/availability" element={<PrivateRoute roles={[ROLE.ADMIN]} component={AvailabilityPage} />} />
                   <Route path="/profile/user" element={<UserProfilePage />} />
-                  <Route path="/availability" element={<AvailabilityPage />} />
                 </Route>
                 <Route path="*" element={<h1>Not Found</h1>} />
                 <Route path="login" element={<Login />} />

@@ -3,7 +3,7 @@ import { Card } from "./styles";
 import { CalendarIcon } from "@mui/x-date-pickers";
 import { useState } from "react";
 import { formatDateForDatabase, formatDateInput } from "../../../utils/format/date";
-import { searchAvailabilityByDate } from "../../../services/availability";
+import { searchAvailabilityByDateAndProfessionalId } from "../../../services/availability";
 import TimeSlots from "../../TimeSlots";
 import { TimeSlotDTO } from "../../../utils/types/timeSlot";
 import { Link } from "react-router-dom";
@@ -29,8 +29,12 @@ const AvailabilityPage = () => {
 
         event.preventDefault();
 
+        const loggedUser = JSON.parse(localStorage.getItem('loggedUser') || '{}');
+
+        const { professional } = loggedUser;
+
         const formattedDate = formatDateForDatabase(date);
-        await searchAvailabilityByDate(formattedDate).then((response) => {
+        await searchAvailabilityByDateAndProfessionalId(formattedDate, professional.id).then((response) => {
             if (!response) {
                 setNotFound(true);
                 setAvailability({} as Availability);

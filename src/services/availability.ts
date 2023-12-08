@@ -23,3 +23,22 @@ export const searchAvailabilityByDate = async (date: string) => {
 
     return response.data;
 }
+
+export const searchAvailabilityByDateAndProfessionalId = async (date: string, professionalId: number) => {
+    try {
+        const response = await api.get(`/availability/professional/${professionalId}/date`, {
+            params: {
+                date
+            },
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        });
+
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+
+    return [];
+};
