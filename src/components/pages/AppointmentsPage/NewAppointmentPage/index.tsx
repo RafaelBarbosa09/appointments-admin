@@ -103,6 +103,7 @@ const NewAppointmentPage = () => {
     setSelectedProfessional(null);
     setSelectedWork(null);
     setDate('');
+    setAvailability({} as Availability);
     setTimeSlot({} as TimeSlotDTO);
     setSuccess(true);
   };
