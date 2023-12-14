@@ -1,4 +1,4 @@
-import { Alert, Button, Container, Grid, InputAdornment, TextField, Typography } from "@mui/material";
+import { Alert, Button, Container, FormHelperText, Grid, InputAdornment, TextField, Typography } from "@mui/material";
 import { Card } from "./styles";
 import React, { useState } from "react";
 import { CalendarIcon, TimeIcon } from "@mui/x-date-pickers";
@@ -13,6 +13,11 @@ const NewAvailabilityPage = () => {
     const [date, setDate] = useState('');
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
+    const [validationErrors, setValidationErrors] = useState({
+        startTime: false,
+        endTime: false,
+        date: false,
+    });
 
     const handleStartTimeChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const value = formatTime(event.target.value);
@@ -31,6 +36,10 @@ const NewAvailabilityPage = () => {
 
     const handleCreateAvailability = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+
+        if (!validateForm()) {
+            return;
+        }
 
         const loggedUser = JSON.parse(localStorage.getItem('loggedUser') || '{}');
 
@@ -52,6 +61,29 @@ const NewAvailabilityPage = () => {
         }).catch((error) => {
             setError(true);
         });
+    };
+
+    const validateForm = () => {
+        const errors: any = {};
+        let isValid = true;
+
+        if (!startTime || startTime === '') {
+            errors.startTime = true;
+            isValid = false;
+        }
+
+        if (!endTime || endTime === '') {
+            errors.endTime = true;
+            isValid = false;
+        }
+
+        if (!date || date === '') {
+            errors.date = true;
+            isValid = false;
+        }
+
+        setValidationErrors(errors);
+        return isValid;
     };
 
     return (
@@ -87,6 +119,7 @@ const NewAvailabilityPage = () => {
                                     label="Data"
                                     value={date}
                                     onChange={event => handleDateChange(event)}
+                                    error={validationErrors.date}
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -98,6 +131,9 @@ const NewAvailabilityPage = () => {
                                         maxLength: 10
                                     }}
                                 />
+                                {validationErrors.date && (
+                                    <FormHelperText style={{ color: 'red', fontWeight: 400 }}>campo obrigatório</FormHelperText>
+                                )}
                             </Grid>
                             <Grid item xs={12} md={6}>
                                 <TextField
@@ -105,6 +141,7 @@ const NewAvailabilityPage = () => {
                                     label="Início"
                                     value={startTime}
                                     onChange={event => handleStartTimeChange(event)}
+                                    error={validationErrors.startTime}
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -117,6 +154,9 @@ const NewAvailabilityPage = () => {
                                         pattern: '^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$',
                                     }}
                                 />
+                                {validationErrors.startTime && (
+                                    <FormHelperText style={{ color: 'red', fontWeight: 400 }}>campo obrigatório</FormHelperText>
+                                )}
                             </Grid>
                             <Grid item xs={12} md={6}>
                                 <TextField
@@ -124,6 +164,7 @@ const NewAvailabilityPage = () => {
                                     label="Fim"
                                     value={endTime}
                                     onChange={event => handleEndTimeChange(event)}
+                                    error={validationErrors.endTime}
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -136,6 +177,9 @@ const NewAvailabilityPage = () => {
                                         pattern: '^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$',
                                     }}
                                 />
+                                {validationErrors.endTime && (
+                                    <FormHelperText style={{ color: 'red', fontWeight: 400 }}>campo obrigatório</FormHelperText>
+                                )}
                             </Grid>
                         </Grid>
                         <Button
