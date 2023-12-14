@@ -1,4 +1,4 @@
-import { Alert, Box, Button, Container, Grid, IconButton, InputAdornment, TextField, Typography } from "@mui/material";
+import { Alert, Box, Button, Container, FormHelperText, Grid, IconButton, InputAdornment, TextField, Typography } from "@mui/material";
 import { Paper } from "./styles";
 import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
@@ -13,6 +13,28 @@ export const Login = () => {
     const [password, setPassword] = useState('');
     const [user, setUser] = useState({} as any);
     const [error, setError] = useState(false);
+    const [validationErrors, setValidationErrors] = useState({
+        username: false,
+        password: false,
+    });
+
+    const validateForm = () => {
+        const errors: any = {};
+        let isValid = true;
+
+        if (!username || username === '') {
+            errors.username = true;
+            isValid = false;
+        }
+
+        if (!password || password === '') {
+            errors.password = true;
+            isValid = false;
+        }
+
+        setValidationErrors(errors);
+        return isValid;
+    };
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -22,6 +44,10 @@ export const Login = () => {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+
+        if (!validateForm()) {
+            return;
+        }
 
         const data = await login({ login: username, password });
 
@@ -87,7 +113,11 @@ export const Login = () => {
                                         fullWidth
                                         value={username}
                                         onChange={(event) => setUsername(event.target.value)}
+                                        error={validationErrors.username}
                                     />
+                                    {validationErrors.username && (
+                                        <FormHelperText style={{ color: 'red', fontWeight: 400 }}>campo obrigatório</FormHelperText>
+                                    )}
                                 </Grid>
                                 <Grid item>
                                     <TextField
@@ -111,7 +141,11 @@ export const Login = () => {
                                         }}
                                         value={password}
                                         onChange={(event) => setPassword(event.target.value)}
+                                        error={validationErrors.password}
                                     />
+                                    {validationErrors.password && (
+                                        <FormHelperText style={{ color: 'red', fontWeight: 400 }}>campo obrigatório</FormHelperText>
+                                    )}
                                 </Grid>
                                 <Grid item>
                                     <Button type="submit" variant="contained" fullWidth>

@@ -1,4 +1,4 @@
-import { Alert, Box, Button, Checkbox, Container, FormControlLabel, Grid, IconButton, InputAdornment, TextField, Typography } from "@mui/material";
+import { Alert, Box, Button, Checkbox, Container, FormControlLabel, FormHelperText, Grid, IconButton, InputAdornment, TextField, Typography } from "@mui/material";
 import { Paper } from "./styles";
 import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
@@ -16,6 +16,34 @@ const SignUpPage = () => {
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string>('');
+    const [validationErrors, setValidationErrors] = useState({
+        username: false,
+        password: false,
+        passwordConfirm: false,
+    });
+
+    const validateForm = () => {
+        const errors: any = {};
+        let isValid = true;
+
+        if (!username || username === '') {
+            errors.username = true;
+            isValid = false;
+        }
+
+        if (!password || password === '') {
+            errors.password = true;
+            isValid = false;
+        }
+
+        if (!passwordConfirm || passwordConfirm === '') {
+            errors.passwordConfirm = true;
+            isValid = false;
+        }
+
+        setValidationErrors(errors);
+        return isValid;
+    };
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -39,6 +67,10 @@ const SignUpPage = () => {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+
+        if (!validateForm()) {
+            return;
+        }
 
         if (!checkPasswordEquality()) {
             setErrorMessage('As senhas não coincidem.');
@@ -112,7 +144,11 @@ const SignUpPage = () => {
                                         fullWidth
                                         value={username}
                                         onChange={(event) => setUsername(event.target.value)}
+                                        error={validationErrors.username}
                                     />
+                                    {validationErrors.username && (
+                                        <FormHelperText style={{ color: 'red', fontWeight: 400 }}>campo obrigatório</FormHelperText>
+                                    )}
                                 </Grid>
                                 <Grid item>
                                     <TextField
@@ -136,7 +172,11 @@ const SignUpPage = () => {
                                         }}
                                         value={password}
                                         onChange={(event) => setPassword(event.target.value)}
+                                        error={validationErrors.password}
                                     />
+                                    {validationErrors.password && (
+                                        <FormHelperText style={{ color: 'red', fontWeight: 400 }}>campo obrigatório</FormHelperText>
+                                    )}
                                 </Grid>
                                 <Grid item>
                                     <TextField
@@ -160,7 +200,11 @@ const SignUpPage = () => {
                                         }}
                                         value={passwordConfirm}
                                         onChange={(event) => setPasswordConfirm(event.target.value)}
+                                        error={validationErrors.passwordConfirm}
                                     />
+                                    {validationErrors.passwordConfirm && (
+                                        <FormHelperText style={{ color: 'red', fontWeight: 400 }}>campo obrigatório</FormHelperText>
+                                    )}
                                 </Grid>
                                 <Grid item>
                                     <FormControlLabel
