@@ -120,16 +120,15 @@ const NewAppointmentPage = () => {
       return;
     }
 
-    await searchAvailabilityByDateAndProfessionalId(formattedDate, selectedProfessional).then((response) => {
-      if (!response) {
-        setNotFound(true);
-        setAvailability({} as Availability);
-        return;
-      }
+    const response = await searchAvailabilityByDateAndProfessionalId(formattedDate, selectedProfessional);
+    if (!response) {
+      setNotFound(true);
+      setAvailability({} as Availability);
+      return;
+    }
 
-      setAvailability(response);
-      setNotFound(false);
-    });
+    setAvailability(response);
+    setNotFound(false);
   };
 
   const convertStringToDateTime = (date: string, time: string) => {
@@ -163,6 +162,15 @@ const NewAppointmentPage = () => {
 
   return (
     <>
+      {notFound && (
+        <Alert
+          severity="warning"
+          variant="filled"
+          onClose={() => setNotFound(false)}
+          sx={{ margin: '-2rem 1rem 1rem 1rem', top: '4rem' }}>
+          Nenhuma disponibilidade encontrada para a data informada.
+        </Alert>
+      )}
       {success && (
         <Alert
           onClose={() => setSuccess(false)}
