@@ -4,6 +4,7 @@ export const formatDateTime = (date: Date): string => {
   const locale = 'pt-BR';
 
   const options: Intl.DateTimeFormatOptions = {
+    timeZone: 'America/Sao_Paulo',
     weekday: 'long',
     year: 'numeric',
     month: 'numeric',
@@ -13,14 +14,16 @@ export const formatDateTime = (date: Date): string => {
   };
 
   const now = new Date();
+  const zonedDate = new Date(date);
+  zonedDate.setHours(zonedDate.getHours() + 3);
 
   if (isSameDay(date, now) &&
     isSameMonth(date, now) &&
     isSameYear(date, now)) {
-    return 'hoje, ' + new Date(date).toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' });
+    return 'hoje, ' + zonedDate.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' });
   }
 
-  return new Date(date).toLocaleDateString(locale, options);
+  return zonedDate.toLocaleDateString(locale, options);
 }
 
 const isSameDay = (date1: Date, date2: Date): boolean => {
