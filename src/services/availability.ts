@@ -40,5 +40,5 @@ export const searchAvailabilityByDateAndProfessionalId = async (date: string, pr
         console.log(error);
     }
 
-    return [];
+    return null;
 };

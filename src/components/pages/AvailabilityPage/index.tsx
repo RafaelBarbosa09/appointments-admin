@@ -1,4 +1,4 @@
-import { Alert, Container, Grid, InputAdornment, TextField, Typography } from "@mui/material";
+import { Alert, Container, FormHelperText, Grid, InputAdornment, TextField, Typography } from "@mui/material";
 import { Card } from "./styles";
 import { CalendarIcon } from "@mui/x-date-pickers";
 import { useState } from "react";
@@ -18,6 +18,22 @@ const AvailabilityPage = () => {
     const [date, setDate] = useState('');
     const [availability, setAvailability] = useState({} as Availability);
     const [notFound, setNotFound] = useState(false);
+    const [validationErrors, setValidationErrors] = useState({
+        date: false,
+    });
+
+    const validateForm = () => {
+        const errors: any = {};
+        let isValid = true;
+
+        if (!date || date === '') {
+            errors.date = true;
+            isValid = false;
+        }
+
+        setValidationErrors(errors);
+        return isValid;
+    };
 
     const handleDateChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const value = formatDateInput(event.target.value);
@@ -29,21 +45,24 @@ const AvailabilityPage = () => {
 
         event.preventDefault();
 
+        if (!validateForm()) {
+            return;
+        }
+
         const loggedUser = JSON.parse(localStorage.getItem('loggedUser') || '{}');
 
         const { professional } = loggedUser;
 
         const formattedDate = formatDateForDatabase(date);
-        await searchAvailabilityByDateAndProfessionalId(formattedDate, professional.id).then((response) => {
-            if (!response) {
-                setNotFound(true);
-                setAvailability({} as Availability);
-                return;
-            }
+        const response = await searchAvailabilityByDateAndProfessionalId(formattedDate, professional.id);
+        if (!response) {
+            setNotFound(true);
+            setAvailability({} as Availability);
+            return;
+        }
 
-            setAvailability(response);
-            setNotFound(false);
-        });
+        setAvailability(response);
+        setNotFound(false);
     };
 
     return (
@@ -69,6 +88,7 @@ const AvailabilityPage = () => {
                                 value={date}
                                 onChange={event => handleDateChange(event)}
                                 onKeyDown={handleSearchAvailability}
+                                error={validationErrors.date}
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
@@ -80,6 +100,9 @@ const AvailabilityPage = () => {
                                     maxLength: 10
                                 }}
                             />
+                            {validationErrors.date && (
+                                <FormHelperText style={{ color: 'red', fontWeight: 400 }}>campo obrigatório</FormHelperText>
+                            )}
                         </Grid>
                     </Grid>
                     <TimeSlots timeSlots={availability?.timeSlots} />
