@@ -1,4 +1,4 @@
-import { Alert, Button, Container, Grid, TextField, Typography } from "@mui/material";
+import { Alert, Button, Container, FormHelperText, Grid, TextField, Typography } from "@mui/material";
 import { Card } from "./styles";
 import { useEffect, useState } from "react";
 import { createCustomer, getCustomersByUserId } from "../../../services/customers";
@@ -20,6 +20,89 @@ const UserProfilePage = () => {
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
     const [message, setMessage] = useState('');
+
+    const [validationErrors, setValidationErrors] = useState({
+        firstname: false,
+        lastname: false,
+        phone: false,
+        cpf: false,
+        rg: false,
+        birthDate: false,
+        street: false,
+        number: false,
+        neighborhood: false,
+        city: false,
+        state: false,
+        zipCode: false,
+    });
+
+    const validateForm = () => {
+        const errors: any = {};
+        let isValid = true;
+
+        if (!firstname || firstname === '') {
+            errors.firstname = true;
+            isValid = false;
+        }
+
+        if (!lastname || lastname === '') {
+            errors.lastname = true;
+            isValid = false;
+        }
+
+        if (!phone || phone === '') {
+            errors.phone = true;
+            isValid = false;
+        }
+
+        if (!cpf || cpf === '') {
+            errors.cpf = true;
+            isValid = false;
+        }
+
+        if (!rg || rg === '') {
+            errors.rg = true;
+            isValid = false;
+        }
+
+        if (!birthDate || birthDate === '') {
+            errors.birthDate = true;
+            isValid = false;
+        }
+
+        if (!street || street === '') {
+            errors.street = true;
+            isValid = false;
+        }
+
+        if (!number || number === '') {
+            errors.number = true;
+            isValid = false;
+        }
+
+        if (!neighborhood || neighborhood === '') {
+            errors.neighborhood = true;
+            isValid = false;
+        }
+
+        if (!city || city === '') {
+            errors.city = true;
+            isValid = false;
+        }
+
+        if (!state || state === '') {
+            errors.state = true;
+            isValid = false;
+        }
+
+        if (!zipCode || zipCode === '') {
+            errors.zipCode = true;
+            isValid = false;
+        }
+
+        setValidationErrors(errors);
+        return isValid;
+    };
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('loggedUser') || '{}');
@@ -45,6 +128,10 @@ const UserProfilePage = () => {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+
+        if (!validateForm()) {
+            return;
+        }
 
         const user = JSON.parse(localStorage.getItem('loggedUser') || '{}');
 
@@ -117,6 +204,9 @@ const UserProfilePage = () => {
                                     value={firstname}
                                     onChange={(event) => setFirstname(event.target.value)}
                                 />
+                                {validationErrors.firstname && (
+                                    <FormHelperText style={{ color: 'red', fontWeight: 400 }}>campo obrigatório</FormHelperText>
+                                )}
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
@@ -127,6 +217,9 @@ const UserProfilePage = () => {
                                     value={lastname}
                                     onChange={(event) => setLastname(event.target.value)}
                                 />
+                                {validationErrors.lastname && (
+                                    <FormHelperText style={{ color: 'red', fontWeight: 400 }}>campo obrigatório</FormHelperText>
+                                )}
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
@@ -137,6 +230,9 @@ const UserProfilePage = () => {
                                     value={phone}
                                     onChange={(event) => setPhone(event.target.value)}
                                 />
+                                {validationErrors.phone && (
+                                    <FormHelperText style={{ color: 'red', fontWeight: 400 }}>campo obrigatório</FormHelperText>
+                                )}
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
@@ -147,6 +243,9 @@ const UserProfilePage = () => {
                                     value={cpf}
                                     onChange={(event) => setCpf(event.target.value)}
                                 />
+                                {validationErrors.cpf && (
+                                    <FormHelperText style={{ color: 'red', fontWeight: 400 }}>campo obrigatório</FormHelperText>
+                                )}
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
@@ -157,6 +256,9 @@ const UserProfilePage = () => {
                                     value={rg}
                                     onChange={(event) => setRg(event.target.value)}
                                 />
+                                {validationErrors.rg && (
+                                    <FormHelperText style={{ color: 'red', fontWeight: 400 }}>campo obrigatório</FormHelperText>
+                                )}
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
@@ -167,6 +269,9 @@ const UserProfilePage = () => {
                                     value={birthDate}
                                     onChange={(event) => setBirthDate(event.target.value)}
                                 />
+                                {validationErrors.birthDate && (
+                                    <FormHelperText style={{ color: 'red', fontWeight: 400 }}>campo obrigatório</FormHelperText>
+                                )}
                             </Grid>
                             <Grid item xs={12} sm={12}>
                                 <TextField
@@ -177,6 +282,9 @@ const UserProfilePage = () => {
                                     value={street}
                                     onChange={(event) => setStreet(event.target.value)}
                                 />
+                                {validationErrors.street && (
+                                    <FormHelperText style={{ color: 'red', fontWeight: 400 }}>campo obrigatório</FormHelperText>
+                                )}
                             </Grid>
                             <Grid item xs={12} sm={4}>
                                 <TextField
@@ -187,6 +295,9 @@ const UserProfilePage = () => {
                                     value={number}
                                     onChange={(event) => setNumber(event.target.value)}
                                 />
+                                {validationErrors.number && (
+                                    <FormHelperText style={{ color: 'red', fontWeight: 400 }}>campo obrigatório</FormHelperText>
+                                )}
                             </Grid>
                             <Grid item xs={12} sm={4}>
                                 <TextField
@@ -197,6 +308,9 @@ const UserProfilePage = () => {
                                     value={neighborhood}
                                     onChange={(event) => setNeighborhood(event.target.value)}
                                 />
+                                {validationErrors.neighborhood && (
+                                    <FormHelperText style={{ color: 'red', fontWeight: 400 }}>campo obrigatório</FormHelperText>
+                                )}
                             </Grid>
                             <Grid item xs={12} sm={4}>
                                 <TextField
@@ -207,6 +321,9 @@ const UserProfilePage = () => {
                                     value={zipCode}
                                     onChange={(event) => setZipCode(event.target.value)}
                                 />
+                                {validationErrors.zipCode && (
+                                    <FormHelperText style={{ color: 'red', fontWeight: 400 }}>campo obrigatório</FormHelperText>
+                                )}
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
@@ -217,6 +334,9 @@ const UserProfilePage = () => {
                                     value={city}
                                     onChange={(event) => setCity(event.target.value)}
                                 />
+                                {validationErrors.city && (
+                                    <FormHelperText style={{ color: 'red', fontWeight: 400 }}>campo obrigatório</FormHelperText>
+                                )}
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
@@ -227,6 +347,9 @@ const UserProfilePage = () => {
                                     value={state}
                                     onChange={(event) => setState(event.target.value)}
                                 />
+                                {validationErrors.state && (
+                                    <FormHelperText style={{ color: 'red', fontWeight: 400 }}>campo obrigatório</FormHelperText>
+                                )}
                             </Grid>
                         </Grid>
                         <Button

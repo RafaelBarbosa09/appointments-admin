@@ -1,4 +1,4 @@
-import { Alert, Button, Container, Grid, TextField, Typography } from "@mui/material";
+import { Alert, Button, Container, FormHelperText, Grid, TextField, Typography } from "@mui/material";
 import { Card } from "./styles";
 import { useEffect, useState } from "react";
 import { createProfessional, getProfessionalByUserId } from "../../../services/professionals";
@@ -12,6 +12,12 @@ const AdminProfilePage = () => {
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
     const [message, setMessage] = useState('');
+    const [validationErrors, setValidationErrors] = useState({
+        firstname: false,
+        lastname: false,
+        phone: false,
+        cnpj: false,
+    });
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('loggedUser') || '{}');
@@ -27,8 +33,40 @@ const AdminProfilePage = () => {
         fetchData();
     }, []);
 
+    const validateForm = () => {
+        const errors: any = {};
+        let isValid = true;
+
+        if (!firstname || firstname === '') {
+            errors.firstname = true;
+            isValid = false;
+        }
+
+        if (!lastname || lastname === '') {
+            errors.lastname = true;
+            isValid = false;
+        }
+
+        if (!cnpj || cnpj === '') {
+            errors.cnpj = true;
+            isValid = false;
+        }
+
+        if (!phone || phone === '') {
+            errors.phone = true;
+            isValid = false;
+        }
+
+        setValidationErrors(errors);
+        return isValid;
+    };
+
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+
+        if (!validateForm()) {
+            return;
+        }
 
         const user = JSON.parse(localStorage.getItem('loggedUser') || '{}');
 
@@ -91,7 +129,11 @@ const AdminProfilePage = () => {
                                     fullWidth
                                     value={firstname}
                                     onChange={(event) => setFirstname(event.target.value)}
+                                    error={validationErrors.firstname}
                                 />
+                                {validationErrors.firstname && (
+                                    <FormHelperText style={{ color: 'red', fontWeight: 400 }}>campo obrigatório</FormHelperText>
+                                )}
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
@@ -101,7 +143,11 @@ const AdminProfilePage = () => {
                                     fullWidth
                                     value={lastname}
                                     onChange={(event) => setLastname(event.target.value)}
+                                    error={validationErrors.lastname}
                                 />
+                                {validationErrors.lastname && (
+                                    <FormHelperText style={{ color: 'red', fontWeight: 400 }}>campo obrigatório</FormHelperText>
+                                )}
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
@@ -111,7 +157,11 @@ const AdminProfilePage = () => {
                                     fullWidth
                                     value={phone}
                                     onChange={(event) => setPhone(event.target.value)}
+                                    error={validationErrors.phone}
                                 />
+                                {validationErrors.phone && (
+                                    <FormHelperText style={{ color: 'red', fontWeight: 400 }}>campo obrigatório</FormHelperText>
+                                )}
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
@@ -121,7 +171,11 @@ const AdminProfilePage = () => {
                                     fullWidth
                                     value={cnpj}
                                     onChange={(event) => setCnpj(event.target.value)}
+                                    error={validationErrors.cnpj}
                                 />
+                                {validationErrors.cnpj && (
+                                    <FormHelperText style={{ color: 'red', fontWeight: 400 }}>campo obrigatório</FormHelperText>
+                                )}
                             </Grid>
                         </Grid>
                         <Button
