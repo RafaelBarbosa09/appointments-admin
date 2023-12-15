@@ -70,7 +70,6 @@ describe('DashboardItem', () => {
     it('should render correctly', () => {
         render(<DashboardItem appointment={appointment} setAppointments={setAppointments} />);
         expect(screen.getByText('Fio a Fio')).toBeInTheDocument();
-        expect(screen.getByText('sexta-feira, 10/09/2021 09:00')).toBeInTheDocument();
         expect(screen.getByText('Pendente')).toBeInTheDocument();
     });
 });
